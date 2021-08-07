@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { Layout } from 'antd';
 
 export const LayoutBasico = (props) => {
@@ -26,12 +26,16 @@ export const LayoutBasico = (props) => {
 
 
 function LoadRender({ routes }) {
-    return routes.map((route, idx) => (
-        <Route
-            key={idx}
-            component={route.component}
-            exact={route.exact}
-            path={route.path}
-        />
-    ));
+    return (
+        <Switch>
+            {routes.map((route, idx) => (
+                <Route
+                    key={idx}
+                    component={route.component}
+                    exact={route.exact}
+                    path={route.path}
+                />
+            ))}
+        </Switch>
+    );
 }

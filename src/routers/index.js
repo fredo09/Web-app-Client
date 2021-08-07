@@ -27,6 +27,9 @@ const routes = [
                 path: "/admin/login",
                 component: SignIn,
                 exact: true
+            },
+            {
+                component: Error404
             }
         ]
     },
@@ -44,6 +47,9 @@ const routes = [
                 path: "/contact",
                 component: Contacto,
                 exact: true
+            },
+            {
+                component: Error404
             }
         ]
     }
