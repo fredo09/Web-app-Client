@@ -1,11 +1,38 @@
 import React from 'react';
-import { Layout } from 'antd';;
+import { Layout } from 'antd';
+import { Route } from 'react-router-dom';
 
+import './LayoutAdmin.scss';
 
-export const LayoutAdmin = () => {
+export const LayoutAdmin = (props) => {
+
+    const { routes } = props;
+
+    const { Header, Content, Footer } = Layout;
+
     return (
-        <div>
-            <h1>🚀  LayoutAdmin</h1>
-        </div>
+        <Layout>
+            <Header>
+                ... Header ...
+            </Header>
+            <Content>
+                <LoadRouters  routes={routes} />
+            </Content>
+            <Footer>
+                ... Footer ...
+            </Footer>
+        </Layout>
     )
+}
+
+function LoadRouters({ routes }) {
+
+    return routes.map((route, idx) => (
+        <Route
+            key={idx}
+            path={route.path}
+            exact={route.exact}
+            component={route.component}
+        />
+    ));
 }
