@@ -6,9 +6,27 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <h1>🚀 Empezando el client-web </h1>
-    </div>
+    <Router>
+      <Switch>
+        {routes.map((route, idx) => (
+          <RouterWithSubRouters
+            key={idx}
+            {...route}
+          />
+        ))}
+      </Switch>
+    </Router>
+  );
+}
+
+function RouterWithSubRouters(route) {
+  console.log(route);
+  return (
+    <Route
+      path={route.path}
+      exact={route.exact}
+      render={props => <route.component {...props} routes={route.routes} />}
+    />
   );
 }
 
