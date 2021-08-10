@@ -4,13 +4,13 @@ import Logo from "./../../../assets/img/logo-white.png";
 
 import "./Menu-Top.scss";
 
-export const MenuTop = () => {
+export const MenuTop = ({ setMenuCollapsed, menuCollapsed }) => {
   return (
     <div className="menu-top">
       <div className="menu-top__left">
         <img className="menu-top__left-logo" src={Logo} alt="logo" />
-        <Button type="link" onClick={() => console.log("click menu")}>
-          <Icon type="menu-fold" />
+        <Button type="link" onClick={() => setMenuCollapsed(!menuCollapsed)}>
+          <Icon type={menuCollapsed ? "menu-unfold" : "menu-fold"} />
         </Button>
       </div>
       <div className="menu-top__right">
