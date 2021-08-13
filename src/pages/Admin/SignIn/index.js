@@ -1,6 +1,7 @@
 import React from "react";
 import { Layout, Tabs } from "antd";
 import { Redirect } from "react-router-dom";
+import { RegisterForm } from "./../../../components/Admin/RegisterForm";
 import Logo from "./../../../assets/img/logo-white.png";
 
 import "./SignIn.scss";
@@ -21,7 +22,8 @@ export const SignIn = () => {
               Componente de login
             </TabPane>
             <TabPane tab={<span>Nuevo usuario</span>} key="2">
-              Nuevo Usuario
+              {/* Nuevo Usuario */}
+              <RegisterForm />
             </TabPane>
           </Tabs>
         </div>
