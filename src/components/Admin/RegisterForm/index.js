@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form, Icon, Input, Button, Checkbox, notification } from "antd";
 import { minLengthValidation, validateEmail } from "./../../../utils";
+import { signUpApi } from "./../../../api/User";
 
 import "./RegisterForm.scss";
 
@@ -60,17 +61,17 @@ export const RegisterForm = () => {
   };
 
   //enviando datos
-  const registerForm = (e) => {
+  const registerForm = async (e) => {
     e.preventDefault();
 
     const { email, password, repeatPassword, privacyPolicy } = formValid;
 
-    const nameValue = inputs.name;
+    const emailValue = inputs.email;
     const passValue = inputs.password;
     const repeatPassValue = inputs.repeatPassword;
     const privacyPolicyValue = inputs.privacyPolicy;
 
-    if (!nameValue || !passValue || !repeatPassValue || !privacyPolicyValue) {
+    if (!emailValue || !passValue || !repeatPassValue || !privacyPolicyValue) {
       notification["error"]({
         message: "Todos los campos son obligatorios",
       });
@@ -81,8 +82,44 @@ export const RegisterForm = () => {
         });
       } else {
         // TO DO: Conectar con la api y registrar el usuario
+        const result = await signUpApi(inputs);
+
+        if (result.status !== "OK") {
+          notification["error"]({
+            message: result.message,
+          });
+        } else {
+          notification["success"]({
+            message: result.message,
+          });
+          resetForm();
+        }
       }
     }
+  };
+
+  //resetear formulario
+  const resetForm = () => {
+    const inputs = document.getElementsByTagName("inputs");
+
+    for (let i = 0; i < inputs.length; i++) {
+      inputs[i].classList.remove("success");
+      inputs[i].classList.remove("error");
+    }
+
+    setInputs({
+      email: "",
+      password: "",
+      repeatPassword: "",
+      privacyPolicy: false,
+    });
+
+    setformValid({
+      email: false,
+      password: false,
+      repeatPassword: false,
+      privacyPolicy: false,
+    });
   };
 
   return (
