@@ -48,7 +48,7 @@ export const RegisterForm = () => {
     if (type === "password") {
       setformValid({
         ...formValid,
-        [name]: minLengthValidation(e.target, 8),
+        [name]: minLengthValidation(e.target, 9),
       });
     }
 
