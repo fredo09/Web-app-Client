@@ -64,8 +64,6 @@ export const RegisterForm = () => {
   const registerForm = async (e) => {
     e.preventDefault();
 
-    const { email, password, repeatPassword, privacyPolicy } = formValid;
-
     const emailValue = inputs.email;
     const passValue = inputs.password;
     const repeatPassValue = inputs.repeatPassword;

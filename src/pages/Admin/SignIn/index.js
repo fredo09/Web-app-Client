@@ -3,6 +3,7 @@ import { Layout, Tabs } from "antd";
 import { Redirect } from "react-router-dom";
 import { RegisterForm } from "./../../../components/Admin/RegisterForm";
 import { SignInForm } from "./../../../components/Admin/SignInForm";
+import { getVerifiedToken } from "./../../../api/Auth";
 import Logo from "./../../../assets/img/logo-white.png";
 
 import "./SignIn.scss";
@@ -10,6 +11,9 @@ import "./SignIn.scss";
 export const SignIn = () => {
   const { Content } = Layout;
   const { TabPane } = Tabs;
+
+  //vereficamos si tenemos el token de un usuario logeado
+  if (getVerifiedToken()) return <Redirect to="/admin" />;
 
   return (
     <Layout className="sign-in">

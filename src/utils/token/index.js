@@ -9,15 +9,15 @@ import { TOKEN, REFRES_TOKEN } from "./../constants";
  * @param {String} token
  */
 export const setToken = (token) => {
-  localStorage.setItem(TOKEN, token);
+  return localStorage.setItem(TOKEN, token);
 };
 
 /**
  * Obtiene el token del localStorage
  * @param {String} token
  */
-export const getToken = (token) => {
-  localStorage.getItem(TOKEN, token);
+export const getToken = () => {
+  return localStorage.getItem(TOKEN);
 };
 
 /**
@@ -33,15 +33,15 @@ export const removeToken = (token) => {
  * @param {*} token
  */
 export const setRefresToken = (token) => {
-  localStorage.setItem(REFRES_TOKEN, token);
+  return localStorage.setItem(REFRES_TOKEN, token);
 };
 
 /**
  * Obtiene el token del localStorage
  * @param {*} token
  */
-export const getRefresToken = (token) => {
-  localStorage.getItem(REFRES_TOKEN, token);
+export const getRefresToken = () => {
+  return localStorage.getItem(REFRES_TOKEN);
 };
 
 /**

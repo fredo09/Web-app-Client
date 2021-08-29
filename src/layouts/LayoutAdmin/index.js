@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { MenuTop } from "./../../components/Admin/Menu-Top";
 import { MenuSlider } from "./../../components/Admin/Menu-Slider";
 import { SignIn } from "./../../pages/Admin/SignIn";
+import useAuth from "./../../hooks/useAuth";
 import { Layout } from "antd";
 import { Route, Switch, Redirect } from "react-router-dom";
 
@@ -14,10 +15,13 @@ export const LayoutAdmin = (props) => {
 
   const { Header, Content, Footer } = Layout;
 
-  const user = null;
+  //Realizamos destructuri del contexto de usuario logeado
+  const { user, isLoading } = useAuth();
+
+  console.log(user);
 
   //si no hay usuario redirigimos al signIn
-  if (!user) {
+  if (!user && !isLoading) {
     return (
       <>
         <Route path="/admin/login" component={SignIn} />
@@ -26,28 +30,34 @@ export const LayoutAdmin = (props) => {
     );
   }
 
-  return (
-    <Layout>
-      {/**Menu slider */}
-      <MenuSlider menuCollapsed={menuCollapsed} />
-      <Layout
-        className="layout-admin"
-        style={{ marginLeft: menuCollapsed ? "80px" : "200px" }}
-      >
-        <Header className="layout-admin__header">
-          {/** Menu Top **/}
-          <MenuTop
-            setMenuCollapsed={setMenuCollapsed}
-            menuCollapsed={menuCollapsed}
-          />
-        </Header>
-        <Content className="layout-admin__content">
-          <LoadRouters routes={routes} />
-        </Content>
-        <Footer className="layout-admin__footer">... Footer ...</Footer>
+  //si hay usuario logeado y termino de cargar
+  if (user && !isLoading) {
+    return (
+      <Layout>
+        {/**Menu slider */}
+        <MenuSlider menuCollapsed={menuCollapsed} />
+        <Layout
+          className="layout-admin"
+          style={{ marginLeft: menuCollapsed ? "80px" : "200px" }}
+        >
+          <Header className="layout-admin__header">
+            {/** Menu Top **/}
+            <MenuTop
+              setMenuCollapsed={setMenuCollapsed}
+              menuCollapsed={menuCollapsed}
+            />
+          </Header>
+          <Content className="layout-admin__content">
+            <LoadRouters routes={routes} />
+          </Content>
+          <Footer className="layout-admin__footer">... Footer ...</Footer>
+        </Layout>
       </Layout>
-    </Layout>
-  );
+    );
+  }
+
+  // si no cumple regresamos null
+  return null;
 };
 
 function LoadRouters({ routes }) {
