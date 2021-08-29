@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MenuTop } from "./../../components/Admin/Menu-Top";
-import { MenuSlider } from "./../../components/Admin/Menu-Slider";
+import MenuSlider from "./../../components/Admin/Menu-Slider";
 import { SignIn } from "./../../pages/Admin/SignIn";
 import useAuth from "./../../hooks/useAuth";
 import { Layout } from "antd";
