@@ -1,0 +1,9 @@
+@import "./../../scss/index.scss";
+
+.modal {
+  .ant-modal-content {
+    .ant-modal-footer {
+      display: none;
+    }
+  }
+}

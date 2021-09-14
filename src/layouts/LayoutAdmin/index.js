@@ -18,8 +18,6 @@ export const LayoutAdmin = (props) => {
   //Realizamos destructuri del contexto de usuario logeado
   const { user, isLoading } = useAuth();
 
-  console.log(user);
-
   //si no hay usuario redirigimos al signIn
   if (!user && !isLoading) {
     return (

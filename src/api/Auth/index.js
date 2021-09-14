@@ -56,7 +56,7 @@ export const refressTokenApi = async (resfressToken_) => {
 
   const params = {
     method: "POST",
-    body: JSON.parse(JSON.stringify(payload)),
+    body: JSON.stringify(payload),
     headers: {
       "Content-Type": "application/json",
     },
