@@ -9,6 +9,7 @@ import "./Users.scss";
 export const Users = () => {
   const [listUsersActive, getListUsersActive] = useState([]);
   const [listUsersNotActive, getListUsersNotActive] = useState([]);
+  const [reloadUsersPage, setReloadUsersPage] = useState(false);
 
   const token_ = getVerifiedToken();
 
@@ -22,6 +23,7 @@ export const Users = () => {
         if (resultActive.status === "OK") {
           if (resultActive.usuariosAcvtive.length > 0) {
             getListUsersActive(resultActive.usuariosAcvtive);
+            setReloadUsersPage(false); // recargamos la pagina otra vez
           }
         } else if (resultActive.status === "ERROR") {
           notification["error"]({
@@ -38,6 +40,7 @@ export const Users = () => {
         if (resultNotActive.status === "OK") {
           if (resultNotActive.usuariosAcvtive.length > 0) {
             getListUsersNotActive(resultNotActive.usuariosAcvtive);
+            setReloadUsersPage(false); // recargamos la pagina otra vez
           }
         } else if (resultNotActive.status === "ERROR") {
           notification["error"]({
@@ -53,13 +56,14 @@ export const Users = () => {
 
     // ejecutamos fetchData
     fetchData();
-  }, [token_]);
+  }, [token_, reloadUsersPage]);
 
   return (
     <div className="users">
       <ListUsers
         usersActive={listUsersActive}
         usersNotActive={listUsersNotActive}
+        setReloadUsersPage={setReloadUsersPage}
       />
     </div>
   );

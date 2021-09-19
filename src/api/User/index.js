@@ -103,7 +103,6 @@ export const getUsersApi = async (token_) => {
  */
 export const getUsersActiveApi = async (token_, status) => {
   const urlApi = `${BASE_API_PATH}/${API_VERSION}/users-actived?active=${status}`;
-  console.log(urlApi);
 
   const params = {
     method: "GET",
@@ -135,7 +134,7 @@ export const getUsersActiveApi = async (token_, status) => {
  * @param {String} userId id del usuario
  * @returns
  */
-export const uploadAvatarApi = async (token_, avatar, userId) => {
+export const uploadAvatarApi = (token_, avatar, userId) => {
   const urlApi = `${BASE_API_PATH}/${API_VERSION}/updateAvatar/${userId}`;
 
   //instacia para enviar informacion a una api esto para enviar alguna image
@@ -147,16 +146,20 @@ export const uploadAvatarApi = async (token_, avatar, userId) => {
     method: "PUT",
     body: formData,
     headers: {
-      "Content-Type": "application/json",
       Authorization: token_,
     },
   };
 
-  const response = await fetch(urlApi, params);
-
-  const result = await response.json();
-
-  return result;
+  return fetch(urlApi, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err.message;
+    });
 };
 
 /**
@@ -197,12 +200,15 @@ export const updateUserApi = (token_, userId, user) => {
 
   return fetch(urlApi, params)
     .then((response) => {
+      console.log(response);
       return response.json();
     })
     .then((result) => {
+      console.log(result);
       return result;
     })
     .catch((err) => {
+      console.log(err);
       return err.message;
     });
 };

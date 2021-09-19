@@ -69,8 +69,6 @@ export const refressTokenApi = async (resfressToken_) => {
 
   const result = await response.json();
 
-  console.log(result);
-
   // EL VALOR ES TRUE SI EL TOKEN YA CADUCO
   if (!result) {
     // TO DO: deslogeamos el usuario

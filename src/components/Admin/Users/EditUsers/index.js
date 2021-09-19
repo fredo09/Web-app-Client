@@ -1,12 +1,27 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { Avatar, Button, Icon, Input, Select, Row, Col, Form } from "antd";
-import { getAvatarApi } from "./../../../../api/User";
 import { useDropzone } from "react-dropzone";
+import { getVerifiedToken } from "./../../../../api/Auth";
 import NotAvatarImage from "./../../../../assets/img/no-avatar.png";
+import {
+  Avatar,
+  Button,
+  Icon,
+  Input,
+  Select,
+  Row,
+  Col,
+  Form,
+  notification,
+} from "antd";
+import {
+  getAvatarApi,
+  updateUserApi,
+  uploadAvatarApi,
+} from "./../../../../api/User";
 
 import "./EditUsers.scss";
 
-export const EditUsers = ({ user }) => {
+export const EditUsers = ({ user, setIsVisible, setReloadUsersPage }) => {
   const [avatar, setAvatar] = useState(null);
 
   const [userData, setUserData] = useState({});
@@ -40,9 +55,50 @@ export const EditUsers = ({ user }) => {
     }
   }, [avatar]);
 
+  //Actualizamos la informacion del usuario
   const updateUser = (e) => {
     e.preventDefault();
-    console.log(userData);
+
+    const token_ = getVerifiedToken();
+    let userUpdate = userData;
+
+    if (userUpdate.password || userUpdate.repeatPassword) {
+      if (userUpdate.password !== userUpdate.repeatPassword) {
+        notification["error"]({
+          message: "Contraseñas no coinciden",
+        });
+        return; //Paramos la ejecucion
+      }
+    }
+    if (!userUpdate.name || !userUpdate.lastName || !userUpdate.email) {
+      notification["error"]({
+        message: "Campos deben de ser obligatorios",
+      });
+      return;
+    }
+
+    //Verificamos el avatar
+    if (typeof userUpdate.avatar === "object") {
+      uploadAvatarApi(token_, userUpdate.avatar, user._id).then((response) => {
+        userUpdate.avatar = response.avatarName;
+
+        updateUserApi(token_, user._id, userUpdate).then((response) => {
+          notification["success"]({
+            message: response.message,
+          });
+        });
+        setIsVisible(false);
+        setReloadUsersPage(true);
+      });
+    } else {
+      updateUserApi(token_, user._id, userUpdate).then((response) => {
+        notification["success"]({
+          message: response.message,
+        });
+      });
+      setIsVisible(false);
+      setReloadUsersPage(true);
+    }
   };
 
   return (

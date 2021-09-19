@@ -11,7 +11,11 @@ import ImageNotFound from "./../../../../assets/img/no-avatar.png";
 
 import "./ListUsers.scss";
 
-export const ListUsers = ({ usersActive, usersNotActive }) => {
+export const ListUsers = ({
+  usersActive,
+  usersNotActive,
+  setReloadUsersPage,
+}) => {
   const [viewUsersActives, setViewUsersActives] = useState(true);
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
@@ -34,6 +38,7 @@ export const ListUsers = ({ usersActive, usersNotActive }) => {
           setIsVisible={setIsVisibleModal}
           setModalTiitle={setModalTitle}
           setModalContent={setModalContent}
+          setReloadUsersPage={setReloadUsersPage}
         />
       ) : (
         <UserNotActives usersNotActive={usersNotActive} />
@@ -57,7 +62,9 @@ function UserActives({
   setIsVisible,
   setModalTiitle,
   setModalContent,
+  setReloadUsersPage,
 }) {
+  //Editar Usuario
   const editUser = (user) => {
     setIsVisible(true);
 
@@ -67,7 +74,13 @@ function UserActives({
       }`
     );
 
-    setModalContent(<EditUsers user={user} />);
+    setModalContent(
+      <EditUsers
+        user={user}
+        setIsVisible={setIsVisible}
+        setReloadUsersPage={setReloadUsersPage}
+      />
+    );
   };
 
   return (
@@ -159,7 +172,7 @@ function UserNotActive({ user }) {
         avatar={<Avatar src={avatar ? avatar : ImageNotFound} />}
         title={`
             ${user.name ? user.name : "..."} 
-            ${user.lastname ? user.lastname : "..."}`}
+            ${user.lastName ? user.lastName : "..."}`}
         description={user.email}
       />
     </List.Item>
