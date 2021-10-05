@@ -200,15 +200,102 @@ export const updateUserApi = (token_, userId, user) => {
 
   return fetch(urlApi, params)
     .then((response) => {
-      console.log(response);
       return response.json();
     })
     .then((result) => {
-      console.log(result);
       return result;
     })
     .catch((err) => {
-      console.log(err);
+      return err.message;
+    });
+};
+
+/**
+ * Conecta con el endPoint para actualizar el status de activo o inactivco del usuario
+ * @param {String} token_  token de autentificacion
+ * @param {String} userId  id del usuario
+ * @param {Boolean} status si el usuario se va activar o no
+ * @returns
+ */
+export const activateUserApi = (token_, userId, status) => {
+  const urlApi = `${BASE_API_PATH}/${API_VERSION}/activate-User/${userId}`;
+
+  const params = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token_,
+    },
+    body: JSON.stringify({ active: status }),
+  };
+
+  return fetch(urlApi, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result.message;
+    })
+    .catch((err) => {
+      return err.message;
+    });
+};
+
+/**
+ * Conecta con el endPoint para eliminar el usuario
+ * @param {String} token_ token de autentificacion
+ * @param {String} userId id del usuario
+ * @returns
+ */
+export const deleteUserApi = (token_, userId) => {
+  const urlApi = `${BASE_API_PATH}/${API_VERSION}/delete-user/${userId}`;
+
+  const params = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token_,
+    },
+  };
+
+  return fetch(urlApi, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result.message;
+    })
+    .catch((err) => {
+      return err.message;
+    });
+};
+
+/**
+ * Conecta con el endPoint para crear usuarios en el panel de administracion
+ * @param {String} token_ token de autentificacion
+ * @param {Object} data informacion del nuevo usuario
+ * @returns
+ */
+export const crearUsuarioApi = (token_, data) => {
+  const urlApi = `${BASE_API_PATH}/${API_VERSION}/create-user`;
+
+  const params = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token_,
+    },
+    body: JSON.stringify(data),
+  };
+
+  return fetch(urlApi, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
       return err.message;
     });
 };

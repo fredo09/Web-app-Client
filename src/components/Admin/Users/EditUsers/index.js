@@ -68,6 +68,10 @@ export const EditUsers = ({ user, setIsVisible, setReloadUsersPage }) => {
           message: "Contraseñas no coinciden",
         });
         return; //Paramos la ejecucion
+      } else {
+        // verificamos la contraseña
+        //var { repeatPassword, ...userNewUpdate } = userUpdate; //eliminamos el repeat password
+        delete userData.repeatPassword;
       }
     }
     if (!userUpdate.name || !userUpdate.lastName || !userUpdate.email) {
@@ -96,6 +100,9 @@ export const EditUsers = ({ user, setIsVisible, setReloadUsersPage }) => {
           message: response.message,
         });
       });
+      //limpiamos el password y repearPassword
+      setUserData({});
+
       setIsVisible(false);
       setReloadUsersPage(true);
     }
@@ -231,6 +238,7 @@ function EditForm({ userData, setUserData, updateUser }) {
               placeholder="Contraseña"
               type="password"
               prefix={<Icon type="lock" />}
+              value={userData.password}
               onChange={(e) =>
                 setUserData({ ...userData, password: e.target.value })
               }
@@ -243,6 +251,7 @@ function EditForm({ userData, setUserData, updateUser }) {
               placeholder="Repetir Contraseña"
               type="password"
               prefix={<Icon type="lock" />}
+              value={userData.repeatPassword}
               onChange={(e) =>
                 setUserData({ ...userData, repeatPassword: e.target.value })
               }

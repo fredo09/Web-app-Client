@@ -14,48 +14,15 @@ export const Users = () => {
   const token_ = getVerifiedToken();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const resultActive = await getUsersActiveApi(token_, true);
-      const resultNotActive = await getUsersActiveApi(token_, false);
+    getUsersActiveApi(token_, true).then((response) => {
+      console.log(response);
+      getListUsersActive(response.usuariosAcvtive);
+    });
 
-      //validamos usuarios activos
-      if (resultActive) {
-        if (resultActive.status === "OK") {
-          if (resultActive.usuariosAcvtive.length > 0) {
-            getListUsersActive(resultActive.usuariosAcvtive);
-            setReloadUsersPage(false); // recargamos la pagina otra vez
-          }
-        } else if (resultActive.status === "ERROR") {
-          notification["error"]({
-            message: resultActive.message,
-          });
-        }
-      } else {
-        notification["error"]({
-          message: "Ocurrio un error al obtener informacion",
-        });
-      }
-      //validamos usuarios no activos
-      if (resultNotActive) {
-        if (resultNotActive.status === "OK") {
-          if (resultNotActive.usuariosAcvtive.length > 0) {
-            getListUsersNotActive(resultNotActive.usuariosAcvtive);
-            setReloadUsersPage(false); // recargamos la pagina otra vez
-          }
-        } else if (resultNotActive.status === "ERROR") {
-          notification["error"]({
-            message: resultNotActive.message,
-          });
-        }
-      } else {
-        notification["error"]({
-          message: "Ocurrio un error al obtener informacion",
-        });
-      }
-    };
-
-    // ejecutamos fetchData
-    fetchData();
+    getUsersActiveApi(token_, false).then((response) => {
+      getListUsersNotActive(response.usuariosAcvtive);
+    });
+    setReloadUsersPage(false);
   }, [token_, reloadUsersPage]);
 
   return (

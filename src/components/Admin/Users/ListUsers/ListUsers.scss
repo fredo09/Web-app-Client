@@ -3,17 +3,21 @@
 .list-users {
   display: flex;
   flex-direction: column;
-  &__switch {
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 20px;
-    span {
-      font-size: 1rem;
-      font-weight: bold;
-    }
-    > button {
-      margin-right: 20px;
+    &-switch {
+      span {
+        font-size: 1rem;
+        font-weight: bold;
+      }
+      > button {
+        margin-right: 20px;
+      }
     }
   }
-
   .users-active {
     background-color: #fff;
     padding: 5px 20px;
