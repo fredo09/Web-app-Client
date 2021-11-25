@@ -6,6 +6,7 @@ import { LayoutBasico } from "./../layouts/LayoutBasico";
 import { Admin } from "./../pages/Admin";
 import { SignIn } from "./../pages/Admin/SignIn";
 import { Users } from "./../pages/Admin/Users";
+import { MenuWeb } from "./../pages/Admin/MenuWeb";
 
 //Pages Basic
 import { Home } from "./../pages/Home";
@@ -32,6 +33,11 @@ const routes = [
       {
         path: "/admin/users",
         component: Users,
+        exact: true,
+      },
+      {
+        path: "/admin/menu",
+        component: MenuWeb,
         exact: true,
       },
       {
