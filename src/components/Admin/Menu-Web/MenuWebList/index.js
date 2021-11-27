@@ -5,7 +5,12 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "./../../../Modal";
 import { MenuWebForm } from "./../AddMenuWebForm";
-import { updateMenuApi, activateMenuApi } from "./../../../../api/menus";
+import { EditMenuWebForm } from "./../EditMenuWebForm";
+import {
+  updateMenuApi,
+  activateMenuApi,
+  deleteMenuApi,
+} from "./../../../../api/menus";
 import { getVerifiedToken } from "./../../../../api/Auth";
 import DragSortableList from "react-drag-sortable";
 import {
@@ -33,7 +38,14 @@ export const MenuList = ({ ListMenu, setReloadMenu }) => {
 
     ListMenu.forEach((item) => {
       listItemsArray.push({
-        content: <MenuItem item={item} activateMenu={activateMenu} />,
+        content: (
+          <MenuItem
+            item={item}
+            activateMenu={activateMenu}
+            updateMenu={updateMenu}
+            deleteMenu={deleteMenu}
+          />
+        ),
       });
     });
 
@@ -64,6 +76,47 @@ export const MenuList = ({ ListMenu, setReloadMenu }) => {
     );
   };
 
+  //Actualizar datos de un menu
+  const updateMenu = (menu) => {
+    setIsVisibleModal(true);
+    setModalTitle(`Editar Menu ${menu.title}`);
+    setModalContent(
+      <EditMenuWebForm
+        setIsVisibleModal={setIsVisibleModal}
+        setReloadMenu={setReloadMenu}
+        menu={menu}
+      />
+    );
+  };
+
+  //Eliminamos el menu
+  const deleteMenu = (menu) => {
+    const token_ = getVerifiedToken();
+
+    //Modal de confirmacion
+    confirm({
+      title: "Eliminar Menu",
+      content: `¿Estas seguro de elimiar el menu ${menu.title}?`,
+      okText: "Confirmar",
+      okType: "danger",
+      cancelText: "Cancelar",
+      onOk() {
+        deleteMenuApi(token_, menu._id)
+          .then((response) => {
+            notification["success"]({
+              message: response,
+            });
+            setReloadMenu(true);
+          })
+          .catch((err) => {
+            notification["error"]({
+              message: "Error del Servidor, Intente mas tarde.",
+            });
+          });
+      },
+    });
+  };
+
   //actualiza el orden de la lista del menu
   const onSort = (sortedList, dropEvent) => {
     const token_ = getVerifiedToken();
@@ -80,7 +133,7 @@ export const MenuList = ({ ListMenu, setReloadMenu }) => {
     <div className="menu-web-list">
       <div className="menu-web-list__header">
         <div>
-          <h2>Listado de Menus </h2>
+          <h2>Listado de Menus</h2>
         </div>
         <Button type="primary" onClick={addMenuWebModal}>
           Agregar Menu
@@ -107,7 +160,7 @@ export const MenuList = ({ ListMenu, setReloadMenu }) => {
 };
 
 //Item que contiene el contenido de los menus
-const MenuItem = ({ item, activateMenu }) => {
+const MenuItem = ({ item, activateMenu, updateMenu, deleteMenu }) => {
   return (
     <List.Item
       actions={[
@@ -117,10 +170,10 @@ const MenuItem = ({ item, activateMenu }) => {
             activateMenu(item._id, e);
           }}
         />,
-        <Button type="primary">
+        <Button type="primary" onClick={() => updateMenu(item)}>
           <Icon type="edit" />
         </Button>,
-        <Button type="danger">
+        <Button type="danger" onClick={() => deleteMenu(item)}>
           <Icon type="delete" />
         </Button>,
       ]}

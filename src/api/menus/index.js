@@ -114,3 +114,32 @@ export const addMenuApi = (token_, menu) => {
       return err;
     });
 };
+
+/**
+ * Conecta con el endPoint para Eliminar menus
+ * @param {*} token_
+ * @param {*} idMenu
+ * @returns
+ */
+export const deleteMenuApi = (token_, idMenu) => {
+  const urlApi = `${BASE_API_PATH}/${API_VERSION}/delete-menu/${idMenu}`;
+
+  const params = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token_,
+    },
+  };
+
+  return fetch(urlApi, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result.message;
+    })
+    .catch((err) => {
+      return err;
+    });
+};

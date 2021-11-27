@@ -165,7 +165,7 @@ function UserActive({ user, editUser, setReloadUsersPage }) {
         notification["success"]({
           message: response,
         });
-        console.log("deshactivamos usuarios", true);
+        // console.log("deshactivamos usuarios", true);
         setReloadUsersPage(true);
       })
       .catch((err) => {

@@ -1,0 +1,19 @@
+@import "./../../../../scss/index.scss";
+
+.edit-menu-web-form {
+  .form-edit {
+    text-align: center;
+
+    .ant-form-item {
+      margin: 5px 0;
+
+      i {
+        color: rgba(0, 0, 0, 0.25);
+      }
+    }
+  }
+
+  .btn-submit {
+    width: 100%;
+  }
+}
