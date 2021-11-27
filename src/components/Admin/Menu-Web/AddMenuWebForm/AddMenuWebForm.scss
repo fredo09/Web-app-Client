@@ -1,0 +1,17 @@
+@import "./../../../../scss/index.scss";
+
+.add-menu-web-form {
+  text-align: center;
+
+  .ant-for-item {
+    margin: 5px 0;
+
+    i {
+      color: rgba(0, 0, 0, 0.25);
+    }
+  }
+
+  .btn-submit {
+    width: 100%;
+  }
+}
