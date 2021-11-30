@@ -7,6 +7,7 @@ import LogoWeb from "./../../../assets/img/logo-white.png";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
 import { getMenuApi } from "./../../../api/menus";
+import { SocialLink } from "./../Social-links";
 
 import "./Menu-Top.scss";
 
@@ -34,6 +35,7 @@ export const MenuTop = () => {
         </Link>
       </Menu.Item>
 
+      {/*Filtramos los links que no son propias de la web y las expernas*/}
       {menuList.map((menu) => {
         const external = menu.url.indexOf("http") > -1 ? true : false;
 
@@ -54,7 +56,7 @@ export const MenuTop = () => {
         );
       })}
 
-      <div>social media</div>
+      <SocialLink />
     </Menu>
   );
 };
