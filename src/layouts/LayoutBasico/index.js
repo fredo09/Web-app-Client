@@ -11,15 +11,17 @@ export const LayoutBasico = (props) => {
   const { Content, Footer } = Layout;
 
   return (
-    <Row>
-      <Col md={4} />
-      <Col md={16}>
-        <MenuTop />
-        <LoadRender routes={routes} />
-        <Footer>Footer</Footer>
-      </Col>
-      <Col md={4} />
-    </Row>
+    <>
+      <Row>
+        <Col lg={4} />
+        <Col lg={16}>
+          <MenuTop />
+        </Col>
+        <Col lg={4} />
+      </Row>
+      <LoadRender routes={routes} />
+      <Footer>Footer</Footer>
+    </>
   );
 
   // return (
