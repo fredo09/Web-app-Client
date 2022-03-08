@@ -12,6 +12,7 @@ import { MenuWeb } from "./../pages/Admin/MenuWeb";
 import { Home } from "./../pages/Home";
 import { Contacto } from "./../pages/Contacto";
 import { Error404 } from "./../pages/Error404";
+import { Courses } from "./../pages/Courses";
 
 //Routes para el panel de administraciòn
 const routes = [
@@ -58,6 +59,11 @@ const routes = [
       {
         path: "/contact",
         component: Contacto,
+        exact: true,
+      },
+      {
+        path: "/courses",
+        component: Courses,
         exact: true,
       },
       {
