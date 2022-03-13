@@ -33,6 +33,12 @@ const MenuSlider = ({ menuCollapsed, location }) => {
             <span className="nav-text">Menu Web</span>
           </Link>
         </Menu.Item>
+        <Menu.Item key="/admin/blog">
+          <Link to={"/admin/blog"}>
+            <Icon type="message" />
+            <span className="nav-text">Blog</span>
+          </Link>
+        </Menu.Item>
       </Menu>
     </Sider>
   );

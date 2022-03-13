@@ -7,6 +7,7 @@ import { Admin } from "./../pages/Admin";
 import { SignIn } from "./../pages/Admin/SignIn";
 import { Users } from "./../pages/Admin/Users";
 import { MenuWeb } from "./../pages/Admin/MenuWeb";
+import Blog from "./../pages/Admin/Blog";
 
 //Pages Basic
 import { Home } from "./../pages/Home";
@@ -39,6 +40,11 @@ const routes = [
       {
         path: "/admin/menu",
         component: MenuWeb,
+        exact: true,
+      },
+      {
+        path: "/admin/blog",
+        component: Blog,
         exact: true,
       },
       {

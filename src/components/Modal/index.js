@@ -7,7 +7,13 @@ import { Modal as ModalAntd } from "antd";
 
 import "./Modal.scss";
 
-export const Modal = ({ children, title, isVisible, setIsVisible }) => {
+export const Modal = ({
+  children,
+  title,
+  isVisible,
+  setIsVisible,
+  ...others
+}) => {
   //cerramos el modal
   const CloseModal = () => {
     setIsVisible(false);
@@ -20,6 +26,7 @@ export const Modal = ({ children, title, isVisible, setIsVisible }) => {
       centered
       visible={isVisible}
       onCancel={CloseModal}
+      {...others}
     >
       {children}
     </ModalAntd>
