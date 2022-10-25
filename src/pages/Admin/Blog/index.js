@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, notification } from "antd";
 import { Modal } from "./../../../components/Modal";
+import { Pagination } from "./../../../components/Pagination";
 import { BlogList } from "./../../../components/Admin/Blog/Blog-List";
 import { withRouter } from "react-router-dom";
 import queryString from "query-string";
@@ -16,6 +17,9 @@ const Blog = ({ location, history }) => {
 
   const [post, setPost] = useState(null);
 
+  //asignamos la paginacion object
+  const [pagination, setPagination] = useState({});
+
   const { page = 1 } = queryString.parse(location.search);
 
   useEffect(() => {
@@ -29,6 +33,12 @@ const Blog = ({ location, history }) => {
         } else {
           //Agregamos los posts
           setPost(response.post);
+          setPagination({
+            limit: response.post.limit,
+            page: response.post.page,
+            pages: response.post.pages,
+            total: response.post.total,
+          });
         }
       })
       .catch((err) => {
@@ -52,7 +62,7 @@ const Blog = ({ location, history }) => {
 
       <BlogList posts={post} />
       {/* paginacion */}
-
+      <Pagination />
       <Modal
         title={modalTitle}
         isVisible={isVisibleModal}
